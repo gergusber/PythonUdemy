@@ -15,18 +15,29 @@ def print_blockchain():
     print(blockchain)
 
 
-def get_user_input():
+def get_transaction_value():
     return float(input('Your transaction amount please: '))
 
 
-tx_amount = get_user_input()
+def get_user_choice():
+    return int(input('Make a choice please: '))
+
+
+tx_amount = get_transaction_value()
 add_value(tx_amount)
 
-tx_amount = get_user_input()
-add_value(tx_amount, get_last_blockchain_value())
+while True:
+    print('Coose:')
+    print('1- for add new transaction value')
+    print('2- for output blockchain blocks')
+    user_choice = get_user_choice()
 
+    if(user_choice == 1 ):
+        tx_amount = get_transaction_value()
+        add_value(tx_amount, get_last_blockchain_value())
+        for block in blockchain:
+            print('outputting block')
+            print(block)
+    else:
+        print_blockchain()
 
-tx_amount = get_user_input()
-add_value(tx_amount, get_last_blockchain_value())
-
-print_blockchain()
