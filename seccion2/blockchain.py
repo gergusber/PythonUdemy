@@ -27,17 +27,18 @@ tx_amount = get_transaction_value()
 add_value(tx_amount)
 
 while True:
-    print('Coose:')
+    print('Choose:')
     print('1- for add new transaction value')
     print('2- for output blockchain blocks')
+    print('3- for break')
     user_choice = get_user_choice()
 
     if(user_choice == 1 ):
         tx_amount = get_transaction_value()
         add_value(tx_amount, get_last_blockchain_value())
-        for block in blockchain:
-            print('outputting block')
-            print(block)
-    else:
+    elif user_choice == 2 :
         print_blockchain()
-
+    elif user_choice == 3 :
+        break
+    else:
+        print('input is invalid')
