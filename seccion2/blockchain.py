@@ -1,4 +1,6 @@
 blockchain = []
+open_transactions = []
+owner = 'German'
 
 
 def get_last_blockchain_value():
@@ -8,17 +10,22 @@ def get_last_blockchain_value():
     return blockchain[-1]
 
 
-def add_transaction(transaction_amount, last_transaction=None):
+def add_transaction(recipient, sender = owner, amount=1.0):
     """Append new value as well as the last blockchain value to the block
 
     Arguments:
-        :transaction_amount: The amount that should be added.
-        :last_transaction: The last blockchain transaction.
+        :sender: the sender of the coins.
+        :recipient: The recipient of the coins.
+        :amount: the amount of coins sent(default = 1.0)
     """
+    transaction = {
+        'sender': sender,
+        'recipient': recipient,
+        'amount': amount
+        }
 
-    if last_transaction is None:
-        last_transaction = [1]
-    blockchain.append([last_transaction, transaction_amount])
+    open_transactions.append(transaction)
+
 
 
 def print_blockchain():
@@ -30,7 +37,9 @@ def print_blockchain():
 
 
 def get_transaction_value():
-    return float(input('Your transaction amount please: '))
+    tx_recipient = input('Enter the recipient of the transaction')
+    tx_amount = float(input('Your transaction amount please: '))
+    return tx_recipient, tx_amount
 
 
 def get_user_choice():
@@ -50,6 +59,10 @@ def verify_chain():
     return is_valid
 
 
+def mine_block():
+    pass
+
+
 while True:
     print('Choose:')
     print('1- for add new transaction value')
@@ -58,8 +71,12 @@ while True:
     user_choice = get_user_choice()
 
     if user_choice == '1':
-        tx_amount = get_transaction_value()
-        add_transaction(tx_amount, get_last_blockchain_value())
+        tx_data = get_transaction_value()
+        recipient, amount = tx_data
+        add_transaction(recipient, amount=amount)
+        print('---'*20)
+        print('OpenTransactions')
+        print(open_transactions)
     elif user_choice == '2':
         print_blockchain()
     elif user_choice == 'q':
