@@ -51,27 +51,25 @@ def get_user_choice():
     return input('Make a choice please: ')
 
 
-def verify_chain():
-    is_valid = True
-    for block_index in range(len(blockchain)):
-        if block_index == 0:
-            continue
-        elif blockchain[block_index][0] == blockchain[block_index - 1]:
-            is_valid = True
-        else:
-            is_valid = False
+def hash_block(block):
+    return '-'.join([str(block[key]) for key in block])
 
-    return is_valid
+def verify_chain():
+    for (index, block) in enumerate(blockchain):
+        if(index == 0):
+            continue  #the genesis block
+
+        if(block['previous_hash'] != blockchain[index-1]):
+            return False
+    return True
+
 
 
 def mine_block():
     last_block = blockchain[-1]
-    hash_block = ''
-    for key in last_block:
-        value = last_block[key]
-        hash_block = hash_block + str(value)
+    hashed_block = hash_block(last_block)
+    print(hashed_block)
 
-    print(hash_block)
     block = {
         'previous_hash': 'xyz',
         'index': len(blockchain),
@@ -102,9 +100,18 @@ while True:
         mine_block()
     elif user_choice == 'q':
         break
+    elif user_choice == 'h':
+        if(len(blockchain)>=1):
+            blockchain[0]={
+                'previous_hash': '',
+                'index': 0,
+                'transactions': [{'sender':'CRIS', 'recipient': 'German', 'amount': 100}]
+            }
     else:
         print('input is invalid')
-
+    if not verify_chain():
+        print_blockchain()
+        print('invalid blockchain')
 else:
     print('User left')
 
