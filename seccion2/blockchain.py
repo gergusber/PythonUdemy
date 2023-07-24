@@ -6,7 +6,7 @@ genesis_block = {
 blockchain = [genesis_block]
 open_transactions = []
 owner = 'German'
-
+participants = {'German'}
 
 def get_last_blockchain_value():
     """Returns the list of the current blockchain"""
@@ -30,6 +30,8 @@ def add_transaction(recipient, sender= owner, amount= 1.0):
         }
 
     open_transactions.append(transaction)
+    participants.add(sender)
+    participants.add(recipient)
 
 
 
@@ -84,6 +86,7 @@ while True:
     print('2- for output blockchain blocks')
     print('3- for break')
     print('4- mine new block')
+    print('5-  output participants')
 
     user_choice = get_user_choice()
 
@@ -98,6 +101,8 @@ while True:
         print_blockchain()
     elif user_choice == '4':
         mine_block()
+    elif user_choice == '5':
+        print(participants)
     elif user_choice == 'q':
         break
     elif user_choice == 'h':
